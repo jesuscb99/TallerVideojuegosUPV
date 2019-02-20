@@ -25,7 +25,13 @@ public class detectionScript : MonoBehaviour
         {
             enemy.playerDetected = true;
         }
-        Debug.Log("Hola");
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            
+            enemy.playerDetected = true;
+        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -34,7 +40,7 @@ public class detectionScript : MonoBehaviour
         {
             enemy.playerDetected = false;
         }
-        Debug.Log("Adios");
+        
        
     }
 
