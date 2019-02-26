@@ -8,6 +8,8 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Movement")]
     public float walkSpeed = 1f;
+    public float movement;
+    public float avance;
 
     [Header("Jumping")]
     public float jumpForce = 5f;
@@ -17,6 +19,11 @@ public class CharacterMovement : MonoBehaviour
 
     public Rigidbody2D rb;
     public Animator animator;
+    public int lives = 1;
+    public float municio = 5f;
+    public municio municioScript;
+    
+
     //Raycasts
     private Vector3 rightOrigin;
     private Vector3 leftOrigin;
@@ -45,42 +52,65 @@ public class CharacterMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (IsDead) { return; }
-        Move();
+        MoveForces();
         if (Input.GetButton("Jump")) Jump();
 
     }
 
     void Move()
     {
-        float movement = Input.GetAxisRaw("Horizontal");
+        movement = Input.GetAxisRaw("Horizontal");
+      
         if (movement > 0)
         {
             transform.Translate(new Vector3(walkSpeed * Time.deltaTime * movement, 0, 0));
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             animator.SetBool("IsMoving", true);
+
+        
         }
         else if (movement < 0)
         {
             transform.Translate(new Vector3(walkSpeed * Time.deltaTime * movement, 0, 0));
             transform.localScale = new Vector3(-1 * Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             animator.SetBool("IsMoving", true);
+            
         }
         else { animator.SetBool("IsMoving", false); }
+
+        
+
+        
     }
 
     void MoveForces()
     {
         float movement = Input.GetAxisRaw("Horizontal");
-        if (movement > 0)
+        if (isGrounded)
         {
-            rb.velocity = new Vector2(walkSpeed * movement, rb.velocity.y);
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+            if (movement > 0)
+            {
+                rb.velocity = new Vector2(walkSpeed * movement, rb.velocity.y);
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+            }
+            else if (movement < 0)
+            {
+                rb.velocity = new Vector2(walkSpeed * movement, rb.velocity.y);
+                transform.localScale = new Vector3(-1 * Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+            }
+            else
+            {
+                
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                
+            }
         }
-        else if (movement < 0)
+        else
         {
-            rb.velocity = new Vector2(walkSpeed * movement, rb.velocity.y);
-            transform.localScale = new Vector3(-1 * Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+            Move();
         }
+        
+    
     }
 
     void Jump()
@@ -90,6 +120,11 @@ public class CharacterMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
+        }
+        if(municio > 0)
+        {
+            municio--;
+            municioScript.MunicioText();
         }
     }
 

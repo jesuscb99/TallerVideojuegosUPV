@@ -41,10 +41,14 @@ public class enemyScript : MonoBehaviour
     public float heigth;
     LayerMask Ground;
     public float RayLength = 0.1f;
+    public livesScript ScriptVidas;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        
+
         currentState = EnemyState.Patrol;
         rb = transform.GetComponent<Rigidbody2D>();
         pathPositions = new List<Vector3>();

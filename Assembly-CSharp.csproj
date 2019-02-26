@@ -65,7 +65,11 @@
     <Compile Include="Assets\creditScript.cs" />
     <Compile Include="Assets\detectionScript.cs" />
     <Compile Include="Assets\enemyScript.cs" />
+    <Compile Include="Assets\followScript.cs" />
+    <Compile Include="Assets\livesScript.cs" />
     <Compile Include="Assets\menuScript.cs" />
+    <Compile Include="Assets\municio.cs" />
+    <Compile Include="Assets\Parallaxing.cs" />
     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
     <Reference Include="Cinemachine">
       <HintPath>D:/Documentos/Projectes/TallerVideojuegosUPV/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
